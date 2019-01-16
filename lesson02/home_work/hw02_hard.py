@@ -4,6 +4,16 @@
 equation = 'y = -12x + 11111140.2121'
 x = 2.5
 # вычислите и выведите y
+#level_hard
+#Задание1
+
+equation = "y = -12x + 11111140.2121" 
+x = 2.5 
+number = equation.split(" ") 
+number_second = str(number[2]) 
+number[2] = number_second[:-1] 
+decision = float(number[2]) * x + float(number[4]) 
+print(decision) 
 
 
 # Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
@@ -23,6 +33,39 @@ date = '01.11.1985'
 date = '01.22.1001'
 date = '1.12.1001'
 date = '-2.10.3001'
+
+
+
+#Задание2
+print("Решение второго задания")
+
+while True:
+	
+	user_date = input("Введите дату через точку: ")
+	user_date1 = user_date.split(".")
+	user_day = int(user_date1[0])
+	user_month = int(user_date1[1])
+	user_year = int(user_date1[2])
+	long_month = [1, 3, 5, 7, 8, 10, 12]
+	if len(user_date1[0]) != 2 or len(user_date1[1]) != 2 or len(user_date1[2]) != 4: 
+		print("Не верный формат даты") 
+		
+	elif user_day > 31 or user_day < 1: 
+		print(" день введен неверно") 
+		
+	elif user_month > 12 or user_month < 1: 
+		print(" месяц введен неверно") 
+		
+	elif user_year > 9999 or user_year < 1: 
+		print(" год введен неверно") 
+		
+	elif user_month not in long_month and user_day > 30: 
+		print("день введен неверно") 
+		
+	else: 
+		print("Дата введена верно: ", user_date)
+		break	
+
 
 
 # Задание-3: "Перевёрнутая башня" (Задача олимпиадного уровня)
