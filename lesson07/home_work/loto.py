@@ -57,3 +57,94 @@
 модуль random: http://docs.python.org/3/library/random.html
 
 """
+import random
+
+
+def make_card():
+   
+    card = [[], [], []]
+
+    for line in card:
+        for _ in range(9):
+            line.append(' ')
+
+    numbers = random.sample(range(1, 91), 15)
+    n = 5
+    m = 0
+    for line in card:
+        numbers_pos = random.sample(range(9), 5)
+        for i, el in enumerate(numbers_pos):
+            line[el] = numbers[m:n][i]
+        n += 5
+        m += 5
+    return card
+
+
+def print_card(card):
+   
+    for line in card:
+        for el in line:
+            print("{:>2}".format(el), end=' ')
+        print("\n")
+
+
+def cross_out(card, keg):
+   
+    for line in card:
+        for i, el in enumerate(line):
+            if el == keg:
+                line[i] = "-"
+                return True
+    return False
+
+
+def check_card(card):
+    
+    for line in card:
+        for el in line:
+            if type(el) == int:
+                return False
+    return True
+
+
+
+player_card = make_card()
+comp_card = make_card()
+
+kegs = random.sample(range(1, 91), 90)
+
+print("Добро пожаловать в игру лото")
+for n, keg in enumerate(kegs):
+    print("Новый бочонок: {}. Осталось бочонков: {}.".format(keg, len(kegs) - n - 1))
+    print("------ Ваша карточка -----")
+    print_card(player_card)
+    print("--------------------------")
+    print("-- Карточка компьютера ---")
+    print_card(comp_card)
+    print("--------------------------")
+
+    while True:
+        answer = input("Зачеркнуть бочонок? Выйти? y/n/q: ")
+        if answer == "q":
+            print("Игра закончена.")
+            exit()
+        elif answer == "y":
+            if not cross_out(player_card, keg):
+                print("Такого бочонка в карточке нет. Вы проиграли.")
+                exit()
+            break
+        elif answer == "n":
+            if cross_out(player_card, keg):
+                print("Такой бочонок в карточке есть. Вы проиграли.")
+                exit()
+            break
+        else:
+            print("Неправильный ввод")
+
+    cross_out(comp_card, keg)
+    if check_card(player_card) and check_card(comp_card):
+        print("Ничья.")
+    elif check_card(player_card):
+        print("Вы зачеркнули все цифры. Победа!")
+    elif check_card(comp_card):
+        print("Компьютер зачеркул все цифры. Поражение!")
